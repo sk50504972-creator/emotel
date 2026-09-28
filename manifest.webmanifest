@@ -1,0 +1,17 @@
+{
+  "name": "이모텔 E MOTEL 순천 연향동",
+  "short_name": "이모텔",
+  "description": "순천 연향동 이모텔 이용 안내: 전화, 길찾기, 예약, 입실·퇴실 시간, 내 객실 퇴실 알림",
+  "lang": "ko",
+  "start_url": "./",
+  "scope": "./",
+  "display": "standalone",
+  "orientation": "portrait",
+  "background_color": "#14213d",
+  "theme_color": "#14213d",
+  "icons": [
+    { "src": "icons/icon-192.png", "sizes": "192x192", "type": "image/png" },
+    { "src": "icons/icon-512.png", "sizes": "512x512", "type": "image/png" },
+    { "src": "icons/icon-maskable-512.png", "sizes": "512x512", "type": "image/png", "purpose": "maskable" }
+  ]
+}
