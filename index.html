@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <meta name="theme-color" content="#14213d">
-<meta name="description" content="순천 연향동 이모텔(E MOTEL) 이용 안내 앱. 전화, 길찾기, 예약, 입실·퇴실 시간, 내 객실 퇴실 알림.">
+<meta name="description" content="순천 연향동 이모텔(E MOTEL) 고객 앱. AI 상담, 앱 설치 쿠폰, 스탬프, 전화·길찾기·예약, 퇴실 알림.">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-title" content="이모텔">
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
@@ -13,9 +13,10 @@
 <link rel="apple-touch-icon" href="./icons/apple-touch-icon.png">
 <title>이모텔 E MOTEL · 순천 연향동</title>
 <style>
-:root{--navy:#14213d;--gold:#f5b942;--bg:#f4f5f8;--card:#fff;--txt:#1b1f2a;--mut:#6c7384;--line:#e3e6ec;--ok:#1f9d61;--red:#d64545}
+:root{--navy:#14213d;--gold:#f5b942;--bg:#f4f5f8;--card:#fff;--txt:#1b1f2a;--mut:#6c7384;--line:#e3e6ec;--ok:#1f9d61;--red:#d64545;--blue:#2f6fd6}
 *{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
 html,body{margin:0}
+@media(min-width:640px){body{max-width:560px;margin:0 auto;box-shadow:0 0 30px rgba(0,0,0,.08)}.tabs{max-width:560px;margin:0 auto}}
 body{font-family:"Pretendard","Apple SD Gothic Neo","Malgun Gothic",sans-serif;background:var(--bg);color:var(--txt);font-size:16px;padding-bottom:calc(72px + env(safe-area-inset-bottom))}
 .hero{background:linear-gradient(160deg,#14213d 0%,#23365f 100%);color:#fff;padding:calc(22px + env(safe-area-inset-top)) 20px 26px;border-bottom-left-radius:22px;border-bottom-right-radius:22px}
 .logo{display:flex;align-items:center;gap:12px}
@@ -34,28 +35,52 @@ section{display:none}section.on{display:block}
 .kv:last-child{border:0}.kv b{font-weight:700}
 .muted{color:var(--mut);font-size:13px;line-height:1.5}
 .btn{display:block;width:100%;border:0;border-radius:12px;padding:14px;font:inherit;font-weight:700;text-align:center;text-decoration:none;cursor:pointer;background:var(--navy);color:#fff;margin-top:8px}
-.btn.gold{background:var(--gold);color:var(--navy)}.btn.line{background:#fff;color:var(--navy);border:1.5px solid var(--navy)}
+.btn.gold{background:var(--gold);color:var(--navy)}.btn.line{background:#fff;color:var(--navy);border:1.5px solid var(--navy)}.btn.sm{padding:9px;font-size:14px}
+.btn:disabled{opacity:.4}
 .row2{display:grid;grid-template-columns:1fr 1fr;gap:8px}
-.room{display:flex;justify-content:space-between;align-items:center;padding:12px 0;border-bottom:1px solid var(--line)}
+.room{display:flex;justify-content:space-between;align-items:center;padding:12px 0;border-bottom:1px solid var(--line);flex-wrap:wrap;gap:6px}
 .room:last-child{border:0}
-.room{flex-wrap:wrap;gap:6px}.room .pill{white-space:nowrap}
 .room b{display:block;font-size:16px}.room span{font-size:13px;color:var(--mut)}
-.pill{display:inline-block;background:#eef1f7;color:#34405a;border-radius:20px;padding:3px 10px;font-size:12px;margin:2px 4px 2px 0}
-.pill.w{background:#fff3d6;color:#7a5200}
+.pill{display:inline-block;background:#eef1f7;color:#34405a;border-radius:20px;padding:3px 10px;font-size:12px;margin:2px 4px 2px 0;white-space:nowrap}
+.pill.w{background:#fff3d6;color:#7a5200}.pill.g{background:#e1f5e8;color:#1c6b3a}
 .count{font-size:40px;font-weight:900;text-align:center;font-variant-numeric:tabular-nums;margin:8px 0 2px}
 .count.over{color:var(--red)}
 .sub{text-align:center;color:var(--mut);font-size:14px}
 label{font-size:13px;color:var(--mut);display:block;margin:10px 0 4px}
-input,select{font:inherit;width:100%;padding:12px;border:1px solid var(--line);border-radius:10px;background:#fff}
-.tabs{position:fixed;left:0;right:0;bottom:0;background:#fff;border-top:1px solid var(--line);display:grid;grid-template-columns:repeat(4,1fr);padding-bottom:env(safe-area-inset-bottom);z-index:10}
-.tabs button{border:0;background:none;padding:9px 0 8px;font:inherit;font-size:12px;color:var(--mut);cursor:pointer}
+input,select,textarea{font:inherit;width:100%;padding:12px;border:1px solid var(--line);border-radius:10px;background:#fff}
+.tabs{position:fixed;left:0;right:0;bottom:0;background:#fff;border-top:1px solid var(--line);display:grid;grid-template-columns:repeat(5,1fr);padding-bottom:env(safe-area-inset-bottom);z-index:10}
+.tabs button{border:0;background:none;padding:9px 0 8px;font:inherit;font-size:11px;color:var(--mut);cursor:pointer;position:relative}
 .tabs button .ic{display:block;font-size:22px}
 .tabs button.on{color:var(--navy);font-weight:700}
+.tabs button .dot{position:absolute;top:6px;right:18%;width:8px;height:8px;border-radius:50%;background:var(--red)}
 .banner{background:#fff3d6;border:1px solid #f1d08a;color:#6b4700;border-radius:12px;padding:12px;margin-bottom:12px;font-size:14px;display:none}
 .notice{background:#eef4ff;border-radius:12px;padding:12px;font-size:14px;line-height:1.55;color:#28406b}
 .install{display:none}
 ol{padding-left:20px;margin:6px 0;line-height:1.7}
 footer{text-align:center;color:var(--mut);font-size:12px;padding:10px 0 20px}
+/* 쿠폰 */
+.coupon{border:2px dashed var(--gold);border-radius:16px;padding:14px;background:#fffdf5;margin-bottom:10px;position:relative}
+.coupon.used{opacity:.5;border-style:solid;border-color:#ccc;background:#f7f7f7}
+.coupon .ttl{font-weight:800;font-size:17px}
+.coupon .code{font-family:ui-monospace,monospace;font-size:26px;letter-spacing:3px;font-weight:900;text-align:center;margin:8px 0;color:var(--navy)}
+.coupon .stamp{position:absolute;right:12px;top:12px;transform:rotate(-12deg);border:3px solid var(--red);color:var(--red);font-weight:900;padding:2px 8px;border-radius:6px;font-size:14px}
+.stamps{display:grid;grid-template-columns:repeat(5,1fr);gap:8px;margin:10px 0}
+.stamps div{aspect-ratio:1;border-radius:50%;border:2px dashed #cfd4de;display:flex;align-items:center;justify-content:center;font-size:22px;color:#cfd4de}
+.stamps div.on{border:2px solid var(--gold);background:#fff3d6;color:#7a5200}
+.pinbox{display:flex;gap:6px;margin-top:8px}.pinbox input{text-align:center;font-size:20px;letter-spacing:6px}
+/* 챗 */
+.chat{display:flex;flex-direction:column;height:calc(100vh - 290px);min-height:360px}
+.msgs{flex:1;overflow:auto;padding:4px 2px}
+.m{max-width:85%;padding:10px 13px;border-radius:16px;margin:6px 0;font-size:15px;line-height:1.5;white-space:pre-wrap;word-break:break-word}
+.m.bot{background:#fff;border:1px solid var(--line);border-bottom-left-radius:4px;margin-right:auto}
+.m.me{background:var(--navy);color:#fff;border-bottom-right-radius:4px;margin-left:auto}
+.m a{color:var(--blue)}
+.m.bot .act{display:flex;gap:6px;flex-wrap:wrap;margin-top:8px}
+.m.bot .act a,.m.bot .act button{font:inherit;font-size:13px;border:1px solid var(--navy);color:var(--navy);background:#fff;border-radius:20px;padding:5px 11px;text-decoration:none;cursor:pointer}
+.chips{display:flex;gap:6px;overflow-x:auto;padding:6px 0;scrollbar-width:none}
+.chips button{flex:none;font:inherit;font-size:13px;border:1px solid var(--line);background:#fff;border-radius:20px;padding:6px 12px;cursor:pointer}
+.inrow{display:flex;gap:6px;margin-top:4px}.inrow input{flex:1}.inrow button{width:64px;border:0;border-radius:10px;background:var(--navy);color:#fff;font:inherit;font-weight:700}
+.typing{color:var(--mut);font-size:13px;padding:4px 8px}
 </style>
 </head>
 <body>
@@ -65,52 +90,50 @@ footer{text-align:center;color:var(--mut);font-size:12px;padding:10px 0 20px}
 </div>
 <div class="quick">
   <a id="qCall"><span class="ic">📞</span>전화</a>
-  <a id="qMap" target="_blank" rel="noopener"><span class="ic">🧭</span>길찾기</a>
-  <button data-go="book"><span class="ic">📅</span>예약</button>
+  <button data-go="ai"><span class="ic">🤖</span>AI 상담</button>
+  <button data-go="benefit"><span class="ic">🎁</span>내 쿠폰</button>
   <button data-go="stay"><span class="ic">🔑</span>내 객실</button>
 </div>
 
 <main>
-<!-- 홈 -->
 <section id="s-home" class="on">
   <div class="banner" id="stayBanner"></div>
+  <div class="banner" id="welcomeBanner" style="display:none"></div>
   <div class="card"><h2>이용 시간</h2>
     <div class="kv"><span>숙박 입실</span><b id="tIn"></b></div>
     <div class="kv"><span>숙박 퇴실</span><b id="tOut"></b></div>
     <div class="kv"><span>대실</span><b id="tDs"></b></div>
     <p class="muted" style="margin:8px 0 0">요일·예약 경로에 따라 시간이 다를 수 있어요. 정확한 시간은 프런트에 확인해 주세요.</p>
   </div>
-  <div class="card"><h2>주차</h2>
-    <p style="margin:0 0 6px" id="parkTxt"></p>
-    <p class="muted" style="margin:0">자리가 없을 때는 프런트에 문의해 주세요.</p>
-  </div>
-  <div class="card"><h2>꼭 알아두세요</h2>
-    <div class="notice">
-      · 청소년(만 19세 미만)은 출입·투숙할 수 없어요. 입실할 때 신분증을 확인할 수 있어요.<br>
-      · 2024년 3월 29일부터 자원재활용법에 따라 일회용 어메니티가 무료로 제공되지 않을 수 있어요. 필요하면 프런트에 문의해 주세요.
-    </div>
-  </div>
-  <div class="card install" id="installCard"><h2>휴대폰에 앱으로 설치</h2>
-    <p class="muted" id="installTxt">홈 화면에 추가하면 다음에 전화·길찾기를 바로 열 수 있어요.</p>
-    <button class="btn gold" id="installBtn">홈 화면에 설치</button>
-  </div>
-  <div class="card" id="iosCard" style="display:none"><h2>아이폰에 설치하는 법</h2>
-    <ol><li>사파리 아래쪽 <b>공유 버튼(□↑)</b>을 누르세요</li><li><b>홈 화면에 추가</b>를 누르세요</li><li>오른쪽 위 <b>추가</b>를 누르면 끝</li></ol>
-  </div>
+  <div class="card"><h2>객실 안내</h2><div id="roomList"></div><div id="facList" style="margin-top:8px"></div>
+    <p class="muted" style="margin:10px 0 0">요금은 날짜·시간대마다 달라요. AI 상담에서 물어보거나 전화로 문의해 주세요.</p></div>
+  <div class="card"><h2>주차</h2><p style="margin:0 0 6px" id="parkTxt"></p><p class="muted" style="margin:0">자리가 없을 때는 프런트에 문의해 주세요.</p></div>
+  <div class="card"><h2>꼭 알아두세요</h2><div class="notice">· 청소년(만 19세 미만)은 출입·투숙할 수 없어요. 입실할 때 신분증을 확인할 수 있어요.<br>· 일회용 어메니티는 자원재활용법에 따라 무료 제공되지 않을 수 있어요. 필요하면 프런트에 문의해 주세요.</div></div>
+  <div class="card install" id="installCard"><h2>휴대폰에 앱으로 설치</h2><p class="muted" style="margin:0 0 8px">홈 화면에 설치하면 쿠폰·스탬프를 잃어버리지 않고, 퇴실 알림도 받을 수 있어요.</p><button class="btn gold" id="installBtn">홈 화면에 설치</button></div>
+  <div class="card" id="iosCard" style="display:none"><h2>아이폰에 설치하는 법</h2><ol><li>사파리 아래쪽 <b>공유 버튼(□↑)</b>을 누르세요</li><li><b>홈 화면에 추가</b>를 누르세요</li><li>오른쪽 위 <b>추가</b>를 누르면 끝</li></ol></div>
 </section>
 
-<!-- 객실 -->
-<section id="s-rooms">
-  <div class="card"><h2>객실 안내</h2><div id="roomList"></div>
-    <p class="muted" style="margin:10px 0 0">요금은 날짜·시간대마다 달라요. 실시간 요금은 예약앱에서 보거나 전화로 문의해 주세요.</p>
-  </div>
-  <div class="card"><h2>부대시설</h2><div id="facList"></div></div>
+<section id="s-ai">
+  <div class="card" style="padding:12px"><div style="display:flex;align-items:center;gap:8px;margin-bottom:4px"><b style="font-size:16px">🤖 AI 상담</b><span class="pill g">24시간 자동응답</span></div>
+    <p class="muted" style="margin:0 0 6px">요금·시간·주차·위치·예약을 물어보세요. 답하기 어려운 건 프런트로 바로 연결해 드려요.</p>
+    <div class="chat"><div class="msgs" id="msgs"></div><div class="chips" id="chips"></div>
+      <div class="inrow"><input id="aiIn" placeholder="예: 오늘 트윈 숙박 얼마예요?" autocomplete="off"><button id="aiSend">보내기</button></div></div></div>
 </section>
 
-<!-- 예약 -->
+<section id="s-benefit">
+  <div class="card"><h2>🎁 내 쿠폰</h2><div id="couponList"></div>
+    <p class="muted" style="margin:6px 0 0">쿠폰은 이 휴대폰에만 저장돼요. 프런트에 화면을 보여 주시면 직원이 승인번호를 눌러 사용 처리해요.</p></div>
+  <div class="card"><h2>⭐ 스탬프</h2><p class="muted" style="margin:0" id="stampInfo"></p><div class="stamps" id="stamps"></div>
+    <button class="btn line sm" id="stampAdd">직원 승인으로 스탬프 적립</button></div>
+  <div class="card"><h2>친구에게 추천</h2><p class="muted" style="margin:0 0 4px">이 앱 링크를 받은 친구도 설치 쿠폰을 받아요.</p><button class="btn line sm" id="shareBtn">링크 공유하기</button></div>
+  <div class="card"><h2>이용 후기</h2><p class="muted" style="margin:0 0 4px">다녀가셨다면 후기를 남겨 주세요. 큰 힘이 됩니다.</p>
+    <div class="row2"><a class="btn line sm" id="rvYeogi" target="_blank" rel="noopener">여기어때 후기</a><a class="btn line sm" id="rvYanolja" target="_blank" rel="noopener">야놀자 후기</a></div></div>
+</section>
+
 <section id="s-book">
   <div class="card"><h2>예약·문의</h2>
     <a class="btn" id="bCall">📞 전화로 문의·예약</a>
+    <a class="btn line" id="bSms" style="display:none">💬 문자로 예약 문의</a>
     <div class="row2"><a class="btn line" id="bYeogi" target="_blank" rel="noopener">여기어때에서 예약</a><a class="btn line" id="bYanolja" target="_blank" rel="noopener">야놀자에서 예약</a></div>
     <p class="muted" style="margin:10px 0 0">앱 쿠폰·회원가는 각 예약앱 기준이에요. 현장 요금은 프런트에 문의해 주세요.</p>
   </div>
@@ -119,11 +142,8 @@ footer{text-align:center;color:var(--mut);font-size:12px;padding:10px 0 20px}
     <div class="row2"><a class="btn line" id="mKakao" target="_blank" rel="noopener">카카오맵</a><a class="btn line" id="mNaver" target="_blank" rel="noopener">네이버지도</a></div>
     <button class="btn line" id="copyAddr">주소 복사 (내비 입력용)</button>
   </div>
-  <div class="card"><h2>이용 후기</h2><p class="muted" style="margin:0 0 4px">다녀가셨다면 후기를 남겨 주세요. 큰 힘이 됩니다.</p>
-    <a class="btn gold" id="bReview" target="_blank" rel="noopener">여기어때 후기 보기·쓰기</a></div>
 </section>
 
-<!-- 내 객실 -->
 <section id="s-stay">
   <div class="card" id="stayForm"><h2>내 객실 등록</h2>
     <p class="muted" style="margin:0">퇴실까지 남은 시간을 보여 드려요. 입력한 내용은 이 휴대폰에만 저장되고 모텔로 전송되지 않아요.</p>
@@ -146,43 +166,50 @@ footer{text-align:center;color:var(--mut);font-size:12px;padding:10px 0 20px}
 
 <nav class="tabs">
   <button data-go="home" class="on"><span class="ic">🏠</span>홈</button>
-  <button data-go="rooms"><span class="ic">🛏️</span>객실</button>
+  <button data-go="ai"><span class="ic">🤖</span>AI 상담</button>
+  <button data-go="benefit"><span class="ic">🎁</span>혜택<span class="dot" id="benefitDot" style="display:none"></span></button>
   <button data-go="book"><span class="ic">📍</span>예약·길</button>
   <button data-go="stay"><span class="ic">⏱️</span>내 객실</button>
 </nav>
 <footer id="foot"></footer>
 
 <script>
-/* ====== 업소 정보 (수정은 여기만) ======
+/* ====== 업소 정보 (수정은 여기만. 고친 뒤 sw.js CACHE_VERSION을 올린다) ======
    출처: 순천시청 숙박정보(e이모텔, 061-725-4848), 여기어때 「순천 e」 공개 정보 (2026-09-28 확인) */
 const INFO={
-  name:'이모텔',
-  phone:'061-725-4848',
-  sms:'',                       // 문자 받을 휴대폰 번호가 있으면 입력 (없으면 문자 버튼 숨김)
-  addrRoad:'전남광주통합특별시 순천시 연향상가2길 4',
-  addrJibun:'연향동 1331-9',
+  name:'이모텔', phone:'061-725-4848',
+  sms:'',                       // 문자 받을 프런트 휴대폰 (없으면 문자 버튼 숨김)
+  addrRoad:'전남광주통합특별시 순천시 연향상가2길 4', addrJibun:'연향동 1331-9',
   checkIn:'17:00', checkOut:'12:00', daesilHours:4,
   parking:'건물 주차장 총 10대. 도보특가(Walk-In) 객실은 주차가 되지 않아요.',
   rooms:[
-    {name:'스탠다드',desc:'일반 객실',cap:'기준 2인 · 최대 2인'},
-    {name:'스탠다드 PC',desc:'객실 내 PC',cap:'기준 2인 · 최대 2인'},
-    {name:'트윈',desc:'더블 1 + 싱글 1',cap:'기준 2인 · 최대 3인 (추가 인원 유료)'},
-    {name:'트리플',desc:'더블 1 + 싱글 2',cap:'기준 3인 · 최대 4인 (추가 인원 유료)'},
-    {name:'도보특가',desc:'걸어서 오시는 분 전용, 주차 불가',cap:'기준 2인 · 최대 2인'}],
-  facilities:['주차장','트윈베드 객실','PC 객실'],
+    {name:'스탠다드',desc:'일반 객실',cap:'기준 2인 · 최대 2인',daesil:20000,sukbak:38000},
+    {name:'스탠다드 PC',desc:'객실 내 PC',cap:'기준 2인 · 최대 2인',daesil:20000,sukbak:42000},
+    {name:'트윈',desc:'더블 1 + 싱글 1',cap:'기준 2인 · 최대 3인 (추가 인원 유료)',daesil:25000,sukbak:45000},
+    {name:'트리플',desc:'더블 1 + 싱글 2',cap:'기준 3인 · 최대 4인 (추가 인원 유료)',daesil:30000,sukbak:66000},
+    {name:'도보특가',desc:'걸어서 오시는 분 전용, 주차 불가',cap:'기준 2인 · 최대 2인',daesil:20000,sukbak:36000}],
+  showPrice:false,              // true로 바꾸면 AI 상담이 위 요금을 그대로 안내 (요금은 평일 기준 예시값, 확인 후 켤 것)
+  weekendAdd:'금·토·공휴일 전날은 요금이 올라요',
+  facilities:['주차장','트윈베드 객실','PC 객실','와이파이'],
+  wifi:'객실 안내문 참고 (프런트에 문의)',
   yeogi:'https://www.yeogi.com/domestic-accommodations/47222',
-  yanolja:'https://nol.yanolja.com/stay/domestic/3000552'
+  yanolja:'https://nol.yanolja.com/stay/domestic/3000552',
+  /* 혜택: 관리자 앱(이모텔 매니저) 설정 › 고객앱 혜택과 같은 값이어야 함 */
+  benefit:{secret:'emotel-2026', welcomeCode:'APP', welcomeTitle:'앱 설치 환영 쿠폰', welcomeDesc:'대실·숙박 3,000원 할인', welcomeDays:30,
+           stampGoal:10, stampReward:'대실 1회 무료', stampRewardDesc:'스탬프 10개 달성 보상'}
 };
 
 const $=s=>document.querySelector(s),$$=s=>[...document.querySelectorAll(s)];
+const pad=n=>String(n).padStart(2,'0');
+const ymd=d=>{d=new Date(d);return `${d.getFullYear()}-${pad(d.getMonth()+1)}-${pad(d.getDate())}`};
+const won=n=>n.toLocaleString('ko-KR')+'원';
 const tel='tel:'+INFO.phone.replace(/\D/g,'');
 const q=encodeURIComponent(INFO.addrRoad);
 $('#heroAddr').textContent=INFO.addrRoad;
 ['#qCall','#bCall','#vCall'].forEach(s=>$(s).href=tel);
-$('#qMap').href=`https://map.kakao.com/link/search/${q}`;
-$('#mKakao').href=`https://map.kakao.com/link/search/${q}`;
-$('#mNaver').href=`https://map.naver.com/p/search/${q}`;
-$('#bYeogi').href=INFO.yeogi;$('#bReview').href=INFO.yeogi+'#review';$('#bYanolja').href=INFO.yanolja;
+$('#mKakao').href=`https://map.kakao.com/link/search/${q}`;$('#mNaver').href=`https://map.naver.com/p/search/${q}`;
+$('#bYeogi').href=INFO.yeogi;$('#rvYeogi').href=INFO.yeogi+'#review';$('#bYanolja').href=INFO.yanolja;$('#rvYanolja').href=INFO.yanolja;
+if(INFO.sms){$('#bSms').style.display='block';$('#bSms').href=`sms:${INFO.sms.replace(/\D/g,'')}?body=${encodeURIComponent('[이모텔 앱] 예약 문의드려요. 날짜/객실/대실·숙박: ')}`}
 $('#addrRoad').textContent=INFO.addrRoad;$('#addrJibun').textContent='지번 '+INFO.addrJibun;
 $('#tIn').textContent=INFO.checkIn+' 부터';$('#tOut').textContent=INFO.checkOut+' 까지';$('#tDs').textContent=INFO.daesilHours+'시간 이용';
 $('#parkTxt').textContent=INFO.parking;
@@ -192,18 +219,88 @@ $('#foot').innerHTML=`${INFO.name} · ${INFO.addrRoad}<br>☎ ${INFO.phone}`;
 $('#copyAddr').onclick=async()=>{try{await navigator.clipboard.writeText(INFO.addrRoad);$('#copyAddr').textContent='복사했어요'}catch(e){prompt('주소를 복사하세요',INFO.addrRoad)}};
 
 /* 탭 */
-function go(v){$$('main section').forEach(s=>s.classList.toggle('on',s.id==='s-'+v));$$('.tabs button').forEach(b=>b.classList.toggle('on',b.dataset.go===v));window.scrollTo(0,0);history.replaceState(null,'','#'+v)}
+function go(v){$$('main section').forEach(s=>s.classList.toggle('on',s.id==='s-'+v));$$('.tabs button').forEach(b=>b.classList.toggle('on',b.dataset.go===v));window.scrollTo(0,0);history.replaceState(null,'',location.pathname+location.search+'#'+v);if(v==='ai')setTimeout(()=>$('#msgs').scrollTop=1e9,50)}
 $$('[data-go]').forEach(b=>b.onclick=()=>go(b.dataset.go));
+
+/* ====== 혜택: 쿠폰·스탬프 (이 휴대폰 localStorage) ====== */
+const BK='emotel_guest_benefit';
+function bload(){try{return JSON.parse(localStorage.getItem(BK))||{coupons:[],stamps:0,ref:'',since:Date.now()}}catch(e){return {coupons:[],stamps:0,ref:'',since:Date.now()}}}
+function bsave(b){localStorage.setItem(BK,JSON.stringify(b))}
+/* 일일 승인코드: 관리자 앱과 같은 계산식 (secret+날짜 → 4자리) */
+function dayCode(d){const s=INFO.benefit.secret+'|'+(d||ymd(Date.now()));let h=5381;for(let i=0;i<s.length;i++)h=((h*33)^s.charCodeAt(i))>>>0;return pad(h%10000).padStart(4,'0')}
+function validCode(c){const t=Date.now();return [ymd(t),ymd(t-864e5)].some(d=>dayCode(d)===String(c).trim())}
+function issueWelcome(ref){const b=bload();if(b.coupons.some(c=>c.kind==='welcome'))return false;
+  const code=INFO.benefit.welcomeCode+'-'+Math.random().toString(36).slice(2,6).toUpperCase();
+  b.coupons.unshift({id:code,kind:'welcome',title:INFO.benefit.welcomeTitle,desc:INFO.benefit.welcomeDesc,code,issued:Date.now(),until:Date.now()+INFO.benefit.welcomeDays*864e5,used:0});
+  b.ref=ref||b.ref;bsave(b);return true}
+function renderBenefit(){const b=bload();const now=Date.now();
+  const live=b.coupons.filter(c=>!c.used&&c.until>now).length;$('#benefitDot').style.display=live?'block':'none';
+  $('#couponList').innerHTML=b.coupons.map(c=>{const exp=c.until<now;return `<div class="coupon ${c.used||exp?'used':''}">${c.used?'<span class="stamp">사용완료</span>':exp?'<span class="stamp">기간만료</span>':''}<div class="ttl">${c.title}</div><div class="muted">${c.desc} · ${ymd(c.until)}까지</div><div class="code">${c.code}</div>
+    ${!c.used&&!exp?`<div class="muted" style="text-align:center">프런트 직원에게 보여 주세요</div><div class="pinbox"><input inputmode="numeric" maxlength="4" placeholder="직원 승인번호" data-use="${c.id}"><button class="btn sm" style="margin:0;width:90px" data-useBtn="${c.id}">사용</button></div>`:''}</div>`}).join('')||'<p class="muted">쿠폰이 없어요. 프런트의 QR을 찍어 앱을 열면 설치 쿠폰을 받을 수 있어요.</p>';
+  $$('#couponList [data-useBtn]').forEach(btn=>btn.onclick=()=>{const id=btn.dataset.usebtn;const v=$(`#couponList [data-use="${id}"]`).value;if(!validCode(v))return alert('승인번호가 맞지 않아요. 직원에게 확인해 주세요.');const c=b.coupons.find(x=>x.id===id);c.used=Date.now();bsave(b);renderBenefit();alert('쿠폰을 사용했어요. 감사합니다!')});
+  const g=INFO.benefit.stampGoal;$('#stampInfo').textContent=`방문할 때마다 1개. ${g}개를 모으면 「${INFO.benefit.stampReward}」 쿠폰이 생겨요. (${b.stamps}/${g})`;
+  $('#stamps').innerHTML=[...Array(g)].map((_,i)=>`<div class="${i<b.stamps?'on':''}">${i<b.stamps?'⭐':i+1}</div>`).join('');}
+$('#stampAdd').onclick=()=>{const v=prompt('직원 승인번호 4자리를 입력해 주세요');if(v===null)return;if(!validCode(v))return alert('승인번호가 맞지 않아요.');const b=bload();
+  if(b.lastStamp&&Date.now()-b.lastStamp<6*3600e3)return alert('스탬프는 한 번 방문에 1개만 적립돼요.');
+  b.stamps++;b.lastStamp=Date.now();if(b.stamps>=INFO.benefit.stampGoal){b.stamps=0;const code='STAMP-'+Math.random().toString(36).slice(2,6).toUpperCase();b.coupons.unshift({id:code,kind:'stamp',title:INFO.benefit.stampReward,desc:INFO.benefit.stampRewardDesc,code,issued:Date.now(),until:Date.now()+90*864e5,used:0});bsave(b);renderBenefit();return alert(`🎉 스탬프 ${INFO.benefit.stampGoal}개 달성! 「${INFO.benefit.stampReward}」 쿠폰이 생겼어요.`)}
+  bsave(b);renderBenefit();alert('스탬프를 적립했어요 ⭐')};
+$('#shareBtn').onclick=async()=>{const url=location.origin+location.pathname+'?ref=share';const data={title:INFO.name+' 앱',text:INFO.name+' 앱을 설치하면 할인 쿠폰을 드려요',url};try{if(navigator.share)await navigator.share(data);else{await navigator.clipboard.writeText(url);alert('링크를 복사했어요')}}catch(e){}};
+/* QR·링크 유입 처리 */
+const params=new URLSearchParams(location.search);const ref=params.get('ref');
+if(ref){const fresh=issueWelcome(ref+(params.get('r')?':'+params.get('r'):''));const wb=$('#welcomeBanner');wb.style.display='block';
+  wb.innerHTML=fresh?`🎁 <b>${INFO.benefit.welcomeTitle}</b>이 발급됐어요 (${INFO.benefit.welcomeDesc}). 홈 화면에 앱을 설치해 두면 쿠폰이 사라지지 않아요. <a href="#" data-go="benefit">쿠폰 보기 ›</a>`:`🎁 설치 쿠폰은 이미 받으셨어요. <a href="#" data-go="benefit">내 쿠폰 보기 ›</a>`;
+  wb.querySelector('[data-go]').onclick=e=>{e.preventDefault();go('benefit')}}
+renderBenefit();
+
+/* ====== AI 상담 (기기 안에서 동작하는 자동응답) ====== */
+const msgs=$('#msgs');let ctx={};
+function bot(text,acts){const d=document.createElement('div');d.className='m bot';d.innerHTML=text.replace(/\n/g,'<br>')+(acts?`<div class="act">${acts.map(a=>a.href?`<a href="${a.href}" ${a.blank?'target="_blank" rel="noopener"':''}>${a.t}</a>`:`<button data-q="${a.q}">${a.t}</button>`).join('')}</div>`:'');msgs.appendChild(d);d.querySelectorAll('[data-q]').forEach(b=>b.onclick=()=>ask(b.dataset.q));msgs.scrollTop=1e9}
+function me(text){const d=document.createElement('div');d.className='m me';d.textContent=text;msgs.appendChild(d);msgs.scrollTop=1e9}
+const CHIPS=['오늘 숙박 요금','대실 몇 시간?','입실·퇴실 시간','주차 돼요?','위치 알려줘','예약하고 싶어요','와이파이','쿠폰 있어요?','연장하고 싶어요','프런트 연결'];
+$('#chips').innerHTML=CHIPS.map(c=>`<button>${c}</button>`).join('');$$('#chips button').forEach(b=>b.onclick=()=>ask(b.textContent));
+$('#aiSend').onclick=()=>{const v=$('#aiIn').value.trim();if(!v)return;$('#aiIn').value='';ask(v)};
+$('#aiIn').onkeydown=e=>{if(e.key==='Enter')$('#aiSend').click()};
+const has=(s,...ws)=>ws.some(w=>s.includes(w));
+function roomMatch(s){return INFO.rooms.find(r=>s.replace(/\s/g,'').includes(r.name.replace(/\s/g,'').toLowerCase()))||(has(s,'pc','피씨','컴퓨터')?INFO.rooms.find(r=>/pc/i.test(r.name)):has(s,'트윈','twin')?INFO.rooms.find(r=>r.name.includes('트윈')):has(s,'트리플','3인','세명','4인','네명')?INFO.rooms.find(r=>r.name.includes('트리플')):null)}
+function priceText(kind,room){if(!INFO.showPrice)return null;const list=room?[room]:INFO.rooms;return list.map(r=>`· ${r.name} ${kind==='대실'?'대실 '+won(r.daesil):'숙박 '+won(r.sukbak)}`).join('\n')}
+function answer(raw){const s=raw.toLowerCase().replace(/\s+/g,' ');const callAct=[{t:'📞 프런트 전화',href:tel},...(INFO.sms?[{t:'💬 문자',href:`sms:${INFO.sms.replace(/\D/g,'')}?body=${encodeURIComponent('[이모텔 앱 상담] '+raw)}`}]:[])];
+  if(ctx.wait==='resv'){ctx={};return {t:`네, 메모했어요: "${raw}"\n예약 확정은 프런트에서 해 드려요. 아래 버튼으로 바로 전화하시거나, 여기어때·야놀자 앱에서 예약하실 수 있어요.`,a:[...callAct,{t:'여기어때 예약',href:INFO.yeogi,blank:1},{t:'야놀자 예약',href:INFO.yanolja,blank:1}]}}
+  if(has(s,'안녕','하이','hello','반가'))return {t:`안녕하세요! ${INFO.name} AI 상담이에요. 요금·시간·주차·위치·예약을 물어보세요 😊`};
+  if(has(s,'연장'))return {t:`연장은 객실에 계신 상태에서 프런트로 전화 주시면 바로 처리해 드려요. (대실 연장은 시간당 추가 요금)\n내 객실 탭에 등록해 두면 퇴실 30분 전에 알려 드려요.`,a:[...callAct,{t:'내 객실 등록',q:'내 객실'}]}
+  if(has(s,'내 객실')){go('stay');return {t:'내 객실 탭으로 이동했어요.'}}
+  if(has(s,'프런트','사람','직원','상담원','전화'))return {t:'프런트로 연결해 드릴게요. 통화 가능 시간은 24시간이에요.',a:callAct};
+  if(has(s,'쿠폰','할인','혜택','스탬프','이벤트'))return {t:`지금 받을 수 있는 혜택이에요.\n🎁 ${INFO.benefit.welcomeTitle}: ${INFO.benefit.welcomeDesc} (프런트 QR로 앱을 열면 발급)\n⭐ 스탬프: 방문마다 1개, ${INFO.benefit.stampGoal}개면 ${INFO.benefit.stampReward}\n혜택 탭에서 확인하세요.`,a:[{t:'🎁 내 쿠폰 보기',q:'쿠폰 보기'}]}
+  if(has(s,'쿠폰 보기')){go('benefit');return {t:'혜택 탭으로 이동했어요.'}}
+  if(has(s,'와이파이','wifi','인터넷'))return {t:`와이파이: ${INFO.wifi}`}
+  if(has(s,'주차','차 대','주차장','차량'))return {t:INFO.parking}
+  if(has(s,'위치','어디','주소','길','찾아','오시는'))return {t:`${INFO.addrRoad} (${INFO.addrJibun})이에요.`,a:[{t:'카카오맵',href:$('#mKakao').href,blank:1},{t:'네이버지도',href:$('#mNaver').href,blank:1}]}
+  if(has(s,'시간','입실','퇴실','체크인','체크아웃','몇 시','몇시'))return {t:`숙박 입실 ${INFO.checkIn}부터, 퇴실 ${INFO.checkOut}까지예요.\n대실은 ${INFO.daesilHours}시간 이용이에요. (요일·예약 경로에 따라 다를 수 있어요)`}
+  if(has(s,'미성년','청소년','학생','나이','신분증'))return {t:'만 19세 미만 청소년은 출입·투숙이 안 돼요. 입실 때 신분증을 확인할 수 있어요.'}
+  if(has(s,'흡연','담배'))return {t:'객실 내 흡연은 금지예요. 흡연 구역은 프런트에 문의해 주세요.'}
+  if(has(s,'인원','몇 명','몇명','추가 인원','3명','4명'))return {t:INFO.rooms.map(r=>`· ${r.name}: ${r.cap}`).join('\n')}
+  if(has(s,'환불','취소'))return {t:'현장 예약 취소·환불은 프런트에 전화 주세요. 여기어때·야놀자 예약은 해당 앱의 취소 규정을 따라요.',a:callAct}
+  if(has(s,'조식','아침','식사'))return {t:'조식은 제공하지 않아요. 주변 식당은 프런트에 물어보시면 안내해 드려요.'}
+  if(has(s,'예약','빈방','빈 방','자리 있','가능')){ctx={wait:'resv'};return {t:'예약 문의 도와드릴게요. 원하시는 날짜·대실/숙박·객실 종류·인원을 한 줄로 적어 주세요.\n예) 10월 31일 숙박 트윈 2명'}}
+  if(has(s,'요금','얼마','가격','비용','숙박','대실','금액','원')){const kind=has(s,'대실')?'대실':'숙박';const room=roomMatch(s);const p=priceText(kind,room);
+    if(p)return {t:`${kind} 요금이에요 (평일 기준, ${INFO.weekendAdd}).\n${p}\n정확한 당일 요금은 프런트에 확인해 주세요.`,a:callAct};
+    return {t:`${room?room.name+' ':''}${kind} 요금은 날짜·요일·시간대에 따라 달라서 프런트에서 바로 안내해 드려요. (${INFO.weekendAdd})\n객실 종류: ${INFO.rooms.map(r=>r.name).join(', ')}`,a:[...callAct,{t:'여기어때 요금 보기',href:INFO.yeogi,blank:1}]}}
+  if(has(s,'객실','방 종류','룸'))return {t:INFO.rooms.map(r=>`· ${r.name}: ${r.desc} (${r.cap})`).join('\n')}
+  if(has(s,'시설','편의','뭐 있'))return {t:'부대시설: '+INFO.facilities.join(', ')}
+  if(has(s,'감사','고마'))return {t:'감사합니다. 편안한 시간 보내세요 😊'}
+  return {t:'제가 바로 답하기 어려운 내용이에요. 프런트에 연결해 드릴까요? 아래 버튼을 누르면 상담 내용을 전달한 채로 연결돼요.',a:callAct}}
+function ask(text){me(text);const ty=document.createElement('div');ty.className='typing';ty.textContent='답변 작성 중…';msgs.appendChild(ty);msgs.scrollTop=1e9;
+  setTimeout(()=>{ty.remove();const r=answer(text);bot(r.t,r.a);const h=JSON.parse(sessionStorage.getItem('emotel_chat')||'[]');h.push({q:text,a:r.t});sessionStorage.setItem('emotel_chat',JSON.stringify(h.slice(-30)))},450)}
+bot(`안녕하세요, ${INFO.name}이에요 👋\n무엇이 궁금하세요? 아래 버튼을 누르거나 질문을 적어 주세요.`);
 if(location.hash&&$('#s-'+location.hash.slice(1)))go(location.hash.slice(1));
 
-/* 내 객실 */
+/* ====== 내 객실 (퇴실 타이머) ====== */
 const SK='emotel_guest_stay';
-const pad=n=>String(n).padStart(2,'0');
 const toLocal=d=>`${d.getFullYear()}-${pad(d.getMonth()+1)}-${pad(d.getDate())}T${pad(d.getHours())}:${pad(d.getMinutes())}`;
 function calcOut(){const k=$('#fKind').value,i=new Date($('#fIn').value);if(isNaN(i))return;
   let o;if(k==='대실')o=new Date(i.getTime()+INFO.daesilHours*3600e3);else{const [h,m]=INFO.checkOut.split(':').map(Number);o=new Date(i);o.setHours(h,m,0,0);if(o<=i)o.setDate(o.getDate()+1)}
   $('#fOut').value=toLocal(o)}
 $('#fIn').value=toLocal(new Date());calcOut();
+if(params.get('r'))$('#fRoom').value=params.get('r');
 $('#fKind').onchange=calcOut;$('#fIn').onchange=calcOut;
 $('#fSave').onclick=()=>{const room=$('#fRoom').value.trim();const out=new Date($('#fOut').value);if(!room)return alert('객실 번호를 입력해 주세요');if(isNaN(out))return alert('퇴실 시각을 확인해 주세요');
   localStorage.setItem(SK,JSON.stringify({room,kind:$('#fKind').value,out:out.getTime(),notified:false}));renderStay();};
@@ -230,7 +327,7 @@ window.addEventListener('beforeinstallprompt',e=>{e.preventDefault();deferred=e;
 $('#installBtn').onclick=async()=>{if(!deferred)return;deferred.prompt();await deferred.userChoice;deferred=null;$('#installCard').style.display='none'};
 const standalone=matchMedia('(display-mode: standalone)').matches||navigator.standalone;
 if(/iphone|ipad|ipod/i.test(navigator.userAgent)&&!standalone)$('#iosCard').style.display='block';
-if('serviceWorker' in navigator)navigator.serviceWorker.register('./sw.js').catch(()=>{});
+if('serviceWorker' in navigator&&location.protocol==='https:')navigator.serviceWorker.register('./sw.js').catch(()=>{});
 </script>
 </body>
 </html>
