@@ -1,5 +1,5 @@
 // 이모텔 고객 앱 서비스워커: 오프라인에서도 안내 화면이 열리게 캐시
-const CACHE_VERSION = 'emotel-v1';
+const CACHE_VERSION='emotel-v2';
 const ASSETS = ['./', './index.html', './manifest.webmanifest', './icons/icon-192.png', './icons/icon-512.png', './icons/apple-touch-icon.png'];
 
 self.addEventListener('install', e => {
